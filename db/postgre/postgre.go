@@ -2,17 +2,17 @@ package postgre
 
 import (
 	"github.com/jinzhu/gorm"
-	"orange/db/dber"
+	"orange/db/param"
 )
 
 type postgreDB struct {
-	dber.Parameter
+	param.Parameter
 	db *gorm.DB
 }
 
-func New(parameter dber.Parameter)dber.DB{
+func New(parameter param.Parameter)param.DB{
 	return &postgreDB{
-		Parameter:dber.Parameter{
+		Parameter:param.Parameter{
 			IP: parameter.IP,
 			Port: parameter.Port,
 			User: parameter.User,

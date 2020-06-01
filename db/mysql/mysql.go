@@ -1,31 +1,33 @@
 package mysql
 
 import (
+	"orange/db/param"
+
 	"github.com/jinzhu/gorm"
-	"orange/db/dber"
 )
 
 type mysqlDB struct {
-    dber.Parameter
+	param.Parameter
 	db *gorm.DB
 }
 
-func New(parameter dber.Parameter)dber.DB{
+func New(parameter param.Parameter) param.DB {
 	return &mysqlDB{
-		Parameter:dber.Parameter{
-			IP: parameter.IP,
-			Port: parameter.Port,
-			User: parameter.User,
+		Parameter: param.Parameter{
+			IP:       parameter.IP,
+			Port:     parameter.Port,
+			User:     parameter.User,
 			Password: parameter.Password,
-			DBName: parameter.DBName,
-	},
+			DBName:   parameter.DBName,
+		},
 	}
 }
-func (this *mysqlDB)Init(){
+func (this *mysqlDB) Init() {
 
 }
+
 //创建连接
-func (this *mysqlDB)Connect()(err error){
+func (this *mysqlDB) Connect() (err error) {
 	dataSourceName := this.User + ":" + this.Password + "@tcp(" +
 		this.IP + ":" + this.Port + ")/" +
 		this.DBName + "?charset=utf8"
@@ -38,11 +40,13 @@ func (this *mysqlDB)Connect()(err error){
 	this.db.SingularTable(true) //全局禁用表名复数
 	return nil
 }
+
 //关闭连接
-func (this *mysqlDB)Close()error{
-	return 	this.db.DB().Close()
+func (this *mysqlDB) Close() error {
+	return this.db.DB().Close()
 }
+
 //获取db对象
-func (this *mysqlDB)DB()*gorm.DB{
+func (this *mysqlDB) DB() *gorm.DB {
 	return this.db
 }

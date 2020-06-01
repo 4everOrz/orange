@@ -2,16 +2,16 @@ package sqlite
 
 import (
 	"github.com/jinzhu/gorm"
-	"orange/db/dber"
+	"orange/db/param"
 )
 
 type sqliteDB struct {
-	dber.Parameter
+	param.Parameter
 	db *gorm.DB
 }
-func New(parameter dber.Parameter)dber.DB{
+func New(parameter param.Parameter)param.DB{
 	return &sqliteDB{
-		Parameter:dber.Parameter{
+		Parameter:param.Parameter{
 			DBName: parameter.DBName,
 		},
 	}

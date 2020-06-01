@@ -5,8 +5,8 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"orange/common/config"
-	"orange/db/dber"
 	"orange/db/mysql"
+	"orange/db/param"
 	"orange/db/postgre"
 	"orange/db/sqlite"
 	"time"
@@ -19,12 +19,12 @@ const (
 )
 
 
-func New()dber.DB{
+func New()param.DB{
 	return &database{}
 }
 type database struct {
 	dbtype  string
-	dber.Parameter
+	param.Parameter
 	db *gorm.DB
 }
 
@@ -37,15 +37,15 @@ func (this *database)Init(){
 	this.DBName, _ = config.GetString("db", "DBName")
 }
 func (this *database)Connect()(err error){
-	var dbEntity dber.DB
+	var dbEntity param.DB
 	//创建数据库对象
 	switch this.dbtype {
 	case mysqlDirver:
-		dbEntity=mysql.New(dber.Parameter{IP: this.IP,Port: this.Port,User: this.User,Password: this.Password,DBName: this.DBName})
+		dbEntity=mysql.New(param.Parameter{IP: this.IP,Port: this.Port,User: this.User,Password: this.Password,DBName: this.DBName})
 	case postgreDirver:
-		dbEntity=postgre.New(dber.Parameter{IP: this.IP,Port: this.Port,User: this.User,Password: this.Password,DBName: this.DBName})
+		dbEntity=postgre.New(param.Parameter{IP: this.IP,Port: this.Port,User: this.User,Password: this.Password,DBName: this.DBName})
 	case sqliteDirver:
-		dbEntity=sqlite.New(dber.Parameter{DBName: this.DBName})
+		dbEntity=sqlite.New(param.Parameter{DBName: this.DBName})
 	}
 	//初始化
 	dbEntity.Init()
