@@ -1,6 +1,7 @@
 package db
 
 import (
+	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -46,6 +47,8 @@ func (this *database)Connect()(err error){
 		dbEntity=postgre.New(param.Parameter{IP: this.IP,Port: this.Port,User: this.User,Password: this.Password,DBName: this.DBName})
 	case sqliteDirver:
 		dbEntity=sqlite.New(param.Parameter{DBName: this.DBName})
+	default:
+		return errors.New("不受支持的数据库类型")
 	}
 	//初始化
 	dbEntity.Init()

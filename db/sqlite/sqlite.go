@@ -2,6 +2,7 @@ package sqlite
 
 import (
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"orange/db/param"
 )
 

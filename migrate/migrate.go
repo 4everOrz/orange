@@ -16,6 +16,7 @@ func New(db *gorm.DB)Migrate{
 type migrate struct {
 	db  *gorm.DB
 }
+
 func (this *migrate)AutoMigrate()error{
 	this.db.AutoMigrate(&user.User{},&article.Article{})
 	return nil

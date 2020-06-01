@@ -2,6 +2,7 @@ package postgre
 
 import (
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"orange/db/param"
 )
 
