@@ -80,6 +80,7 @@ func (this *webService)setRoutes(){
 		user.PUT("/auth",userHandler.Auth)
 		user.GET("/me",userHandler.Me,userInfo(this.runtime))
 		user.PUT("/:id",userHandler.Update,userInfo(this.runtime))
+		user.GET("/:id/all",userHandler.QueryAll)
 	}
    {
 	   articleHandler:=articleHandler{this.runtime}

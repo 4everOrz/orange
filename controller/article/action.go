@@ -29,3 +29,19 @@ func (this *AddCmd)Validate()error{
 
 	return nil
 }
+type QueryCmd struct {
+	Writer   string
+	UpdatedFrom int64
+	UpdatedTo  int64
+	CreatedFrom   int64
+	CreatedTo    int64
+	CreatorName  string
+}
+func (this *QueryCmd)Normalize(){
+
+}
+func (this *QueryCmd)Validate()error{
+	this.Normalize()
+
+	return nil
+}

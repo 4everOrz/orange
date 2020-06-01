@@ -153,3 +153,14 @@ func (this *userHandler)Update(ctx echo.Context)(err error)  {
 End:
 	return ctx.JSON(http.StatusBadRequest, response{Message: err.Error()})
 }
+func(this *userHandler)QueryAll(ctx echo.Context)(err error){
+	 user:=&user.User{}
+     user,err=this.runtime.User().QueryAll(ctx.Param("id"))
+	if err!=nil{
+		log4go.Error(err.Error())
+		goto End
+	}
+	return ctx.JSON(http.StatusOK, response{Message: "操作成功",Data: user})
+End:
+	return ctx.JSON(http.StatusBadRequest, response{Message: err.Error()})
+}

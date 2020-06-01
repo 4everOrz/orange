@@ -17,6 +17,8 @@ type Controller interface{
 	Update(cmd *UpdateCmd)error
 	//查询列表
 	Query(cmd *QueryCmd)(UserList,error)
+	//查询关联
+	QueryAll(id string)(*User,error)
 }
 func NewUser(db *gorm.DB)Controller{
 	return &user{
@@ -65,4 +67,7 @@ func (this *user)Query(cmd *QueryCmd)(UserList,error){
 		return UserList{},err
 	}
 	return this.Model.Query(this.DB,cmd)
+}
+func (this *user)QueryAll(id string)(*User,error){
+	return this.Model.QuerryAll(this.DB,id)
 }

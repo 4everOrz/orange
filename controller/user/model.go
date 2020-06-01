@@ -46,6 +46,8 @@ type Model interface {
 	Update(db *gorm.DB,cmd *UpdateCmd)error
 	//查询列表
 	Query(db *gorm.DB,cmd *QueryCmd)(UserList,error)
+	//查询所有关联
+	QuerryAll(db *gorm.DB,id string)(*User,error)
 
 }
 func NewModel()Model{
@@ -143,4 +145,16 @@ func (this *model)Update(db *gorm.DB,cmd *UpdateCmd)error{
 		paramers["email"]=cmd.Email
 	}
 	return ql.Update(paramers).Error
+}
+func (this *model)QuerryAll(db *gorm.DB,id string)(*User,error){
+	var user User
+    err:=db.Model(&User{}).Where("id = ?",id).Select("*").Find(&user).Error
+    if err!=nil{
+	return &user,err
+    }
+    err=db.Model(&user).Related(&user.Articles,"Articles").Find(&user.Articles).Error
+    if err!=nil&&err!=gorm.ErrRecordNotFound{
+    	return &user,err
+	}
+    return &user,nil
 }
