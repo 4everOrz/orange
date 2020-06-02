@@ -148,13 +148,16 @@ func (this *model)Update(db *gorm.DB,cmd *UpdateCmd)error{
 }
 func (this *model)QuerryAll(db *gorm.DB,id string)(*User,error){
 	var user User
-    err:=db.Model(&User{}).Where("id = ?",id).Select("*").Find(&user).Error
+	//使用Related方法
+	err:=db.Model(&User{}).Where("id = ?",id).Select("*").Find(&user).Error
     if err!=nil{
 	return &user,err
     }
-    err=db.Model(&user).Related(&user.Articles,"Articles").Find(&user.Articles).Error
+    err=db.Model(&user).Related(&user.Articles,"Articles").Error
     if err!=nil&&err!=gorm.ErrRecordNotFound{
     	return &user,err
 	}
-    return &user,nil
+	//使用Preload方法
+	/*err=db.Debug().Where("users.id = ?",id).Preload("Articles").Find(&user).Error*/
+    return &user,err
 }

@@ -45,3 +45,7 @@
 [2020/06/01 11:30:39 CST] [EROR] 测试日志输出
 [2020/06/01 11:30:42 CST] [EROR] 测试日志输出
 [2020/06/01 11:30:44 CST] [EROR] 测试日志输出
+[2020/06/01 16:36:50 CST] [EROR] can't preload field article for user.User
+[2020/06/01 16:45:41 CST] [EROR] record not found
+[2020/06/01 17:08:24 CST] [EROR] pq: relation "user_list" does not exist
+[2020/06/01 17:43:59 CST] [EROR] pq: relation "user_list" does not exist

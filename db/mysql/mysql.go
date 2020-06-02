@@ -1,7 +1,9 @@
 package mysql
 
 import (
+	"github.com/alecthomas/log4go"
 	"orange/db/param"
+	"time"
 
 	"github.com/jinzhu/gorm"
 	_"github.com/jinzhu/gorm/dialects/mysql"
@@ -39,6 +41,14 @@ func (this *mysqlDB) Connect() (err error) {
 	this.db.DB().SetMaxIdleConns(10)
 	this.db.DB().SetMaxOpenConns(100)
 	this.db.SingularTable(true) //全局禁用表名复数
+	go func (){
+		for{
+			if err:=this.db.DB().Ping();err!=nil{
+				log4go.Error(err.Error())
+			}
+			time.Sleep(1*time.Minute)
+		}
+	}()
 	return nil
 }
 

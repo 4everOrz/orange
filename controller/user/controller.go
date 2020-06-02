@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/alecthomas/log4go"
 	"github.com/jinzhu/gorm"
+	"strings"
 )
 
 type Controller interface{
@@ -69,5 +70,8 @@ func (this *user)Query(cmd *QueryCmd)(UserList,error){
 	return this.Model.Query(this.DB,cmd)
 }
 func (this *user)QueryAll(id string)(*User,error){
+	if strings.TrimSpace(id)==""{
+		return nil,errors.New("id参数异常")
+	}
 	return this.Model.QuerryAll(this.DB,id)
 }

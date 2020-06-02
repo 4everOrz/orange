@@ -18,6 +18,10 @@ type migrate struct {
 }
 
 func (this *migrate)AutoMigrate()error{
-	this.db.AutoMigrate(&user.User{},&article.Article{})
+	models:=[]interface{}{
+		&user.User{},
+		&article.Article{},
+	}
+	this.db.AutoMigrate(models...)
 	return nil
 }
